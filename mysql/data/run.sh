@@ -29,7 +29,7 @@ do
     esac
 done
 
-if [ "$NB_CONTAINER" != '0' ] && [ $RERUN -eq 0 ]; then
+if [ "$NB_CONTAINER" -gt 0 ] && [ $RERUN -eq 0 ]; then
     echo 'already run'
     exit 0;
 elif [ $RERUN -eq 1 ]; then

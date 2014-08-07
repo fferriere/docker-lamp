@@ -6,7 +6,7 @@ MAINTAINER ferriere.florian@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get install -y mysql-server
+RUN apt-get install -y mysql-server --no-install-recommends
 
 # change local listen to all address listen
 RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
@@ -19,4 +19,4 @@ EXPOSE 3306
 
 VOLUME ["/var/run/mysqld"]
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/usr/local/bin/entrypoint.sh"]
