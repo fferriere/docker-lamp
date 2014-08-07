@@ -11,4 +11,4 @@ RUN apt-get install -y mysql-client
 
 ADD entrypoint.sh /usr/local/bin/entrypoint.sh
 
-ENTRYPOINT ["mysql"]
+CMD ["mysql"]
