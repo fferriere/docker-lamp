@@ -2,15 +2,17 @@
 
 NAME='fferriere-mysql-server'
 
+NB_CONTAINER_RUN=$(docker ps | grep $NAME | wc -l)
 NB_CONTAINER=$(docker ps -a | grep $NAME | wc -l)
 
-params="$(getopt -o rhbdp: -l rerun,help,bash:,daemon:,bind-port: --name "$0" -- "$@")"
+params="$(getopt -o rhbdp: -l rerun,help,bash:,daemon:,bind-port:,no-volume --name "$0" -- "$@")"
 eval set -- "$params"
 
 RERUN=0
 USE_DAEMON=1
 USE_BASH=0
 HOST_PORT=''
+VOLUME_ARG='--volumes-from fferriere-mysql-data'
 
 while true
 do
@@ -48,6 +50,10 @@ do
             fi
             shift
             ;;
+        --no-volume)
+            VOLUME_ARG=''
+            shift
+            ;;
         -h|--help)
             echo "Run the container with mysql data"
             echo "  -h, --help for show this help"
@@ -66,10 +72,15 @@ do
     esac
 done
 
+
 if [ "$NB_CONTAINER" -gt 0 ] && [ $RERUN -eq 0 ]; then
     echo 'already run'
     exit 0;
 elif [ $RERUN -eq 1 ]; then
+
+    if [ "$NB_CONTAINER_RUN" -gt 0 ]; then
+        docker stop $NAME &> /dev/null
+    fi
     docker rm $NAME &> /dev/null
 fi
 
@@ -84,5 +95,5 @@ DOCKER_ARGS=$DOCKER_ARGS' '$HOST_PORT
 
 docker run $DOCKER_ARGS \
   --name $NAME \
-  --volumes-from fferriere-mysql-data \
+  $VOLUME_ARG \
   fferriere/mysql-server $BASH
