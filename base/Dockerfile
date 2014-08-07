@@ -17,3 +17,4 @@ RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
 RUN echo "Europe/Paris" > /etc/timezone; dpkg-reconfigure tzdata
 
 RUN apt-get update -y
+RUN apt-get install -y net-tools procps
