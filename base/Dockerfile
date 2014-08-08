@@ -6,6 +6,7 @@ FROM stackbrew/debian:wheezy
 MAINTAINER ferriere.florian@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV TERM linux
 
 # for run dpkg faster
 RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup
