@@ -55,7 +55,7 @@ do
             shift
             ;;
         -h|--help)
-            echo "Run the container with mysql data"
+            echo "Run the container with mysql server"
             echo "  -h, --help for show this help"
             echo "  -r, --rerun for delete container and run a new container with same name"
             echo "  -b, --bash=false run container with \"-i -t --rm /bin/bash\" arguments"
