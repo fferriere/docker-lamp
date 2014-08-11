@@ -62,3 +62,35 @@ Each arguments give on run script are send to _docker run_ for launch command in
 We don't use the **ENTRYPOINT** in Dockerfile, it replace by **CMD**. Like this we can use the command below for run bash in container.
 
     ./run.sh /bin/bash
+
+aphpache container
+------------------
+
+This container run apache with php5 and xdebug (you must remove xdebug on prod).
+
+
+The **run.sh** script accept some argument :
+*  -h, --help for show this help
+*  -P add the -P argument for docker run
+*  -p bind host web port with container web port (-p 80:80)
+*  --port=80 as -p but you can replace default web port on host
+*  -b, --bash=false run container with "-i -t --rm /bin/bash" arguments, incompatible with -d
+*  -d, --daemon=true run container as a daemon, incompatible with -b
+*  -s, --src=$(pwd) set the webapp source directory (-v $src:/var/www)
+*  -l, --log bind log volume with $src/../logs
+*  --log-reset remove all *.log files in logpath
+
+By default the container's /var/www is bind with the working directory, you can change it with _-s_/_--src_ option
+
+    ./run.sh --src /home/user/public
+
+By default no port is bind with host, you can bind with default web port (80) with _-p_ option which add _-p 80:80_ option to docker run
+
+    ./aphpache/run.sh -p # => docker run -p 80:80
+
+You can use th _--port_ option for select another port to bind with host
+
+    ./aphpache/run.sh --port 8080 # => docker run -p 8080:80
+
+The _-l_ option bind the /va/log/apache2 (on container) with $src/../logs (on host).
+You can clean there log with _--log-reset_ option

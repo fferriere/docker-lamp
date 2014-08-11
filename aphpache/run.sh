@@ -80,7 +80,7 @@ do
             echo "  -d, --daemon=true run container as a daemon"
             echo "              incompatible with -b"
             echo "  -s, --src=\$(pwd) set the webapp source directory (-v \$src:/var/www)"
-            echo "  -l, --log bind log volume with $src/../log"
+            echo "  -l, --log bind log volume with \$src/../logs"
             echo "  --log-reset remove all *.log files in logpath"
             exit
             ;;
@@ -107,7 +107,7 @@ fi
 LOG_ARGS=''
 if [ $USE_LOG -eq 1 ]; then
 
-    logpath=$(dirname $SRC_PATH)"/log";
+    logpath=$(dirname $SRC_PATH)"/logs";
 
     if [ ! -d $logpath ]; then
         mkdir $logpath
